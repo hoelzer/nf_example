@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-//input_fasta_channel = Channel.fromPath("data/*.fasta")
+input_fasta_channel = Channel.fromPath("data/*.fasta")
 
 process DATABASE {
 
