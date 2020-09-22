@@ -29,7 +29,7 @@ process ALIGN {
 
     script:
     """
-    mmseqs easy-search ${fastas} ${db} aln.m8 tmp
+    mmseqs easy-search ${fastas} ${db} ${fastas.simpleName}.m8 tmp
     """
 }
 
