@@ -6,6 +6,8 @@ input_fasta_channel = Channel.fromPath("data/*.fasta")
 
 process ALIGN {
 
+    container = 'mhoelzer/mmseqs2:12.113e3-0'
+
     input: 
     path(fastas)
     path(db)
@@ -21,14 +23,16 @@ process ALIGN {
 
 process DATABASE {
 
+    container = 'mhoelzer/mmseqs2:12.113e3-0'
+
     output: 
     path('uniprot_sprot.tar.gz')
 
     script:
     """
     wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz .
-    mmseqs createdb uniprot_sprot.fasta.gz targetDB
-    mmseqs createindex targetDB tmp
+    #mmseqs createdb uniprot_sprot.fasta.gz targetDB
+    #mmseqs createindex targetDB tmp
     tar zcvf uniprot_sprot.tar.gz target*
     """
 }
