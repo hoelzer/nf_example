@@ -4,6 +4,21 @@ nextflow.enable.dsl=2
 
 input_fasta_channel = Channel.fromPath("data/*.fasta")
 
+process ALIGN {
+
+    input: 
+    path(fastas)
+    path(db)
+
+    output:
+    path("${fastas.simpleName}.m8")
+
+    script:
+    """
+    mmseqs easy-search ${fastas} ${db} ${fastas.simpleName}.m8 tmp
+    """
+}
+
 process DATABASE {
 
     output: 
@@ -15,21 +30,6 @@ process DATABASE {
     mmseqs createdb uniprot_sprot.fasta.gz targetDB
     mmseqs createindex targetDB tmp
     tar zcvf uniprot_sprot.tar.gz target*
-    """
-}
-
-process ALIGN {
-
-    input: 
-    path(fastas)
-    path(db)
-
-    output:
-    path('aln.m8')
-
-    script:
-    """
-    mmseqs easy-search ${fastas} ${db} ${fastas.simpleName}.m8 tmp
     """
 }
 
