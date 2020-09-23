@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-input_query_fasta = Channel.fromPath("data/GCF_000693535.1_Kleb_pneu_CHS_28_V1_genomic.fna.gz")
+input_query_fasta = Channel.fromPath("data/*.fna.gz")
 //input_query_fasta = Channel.fromPath(params.fasta)
 input_target_fasta = Channel.fromPath('data/target/target.fna.gz')
 
