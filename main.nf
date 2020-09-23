@@ -2,8 +2,11 @@
 
 nextflow.enable.dsl=2
 
-input_query_fasta = Channel.fromPath("data/*.fna.gz")
-//input_query_fasta = Channel.fromPath(params.fasta)
+if (params.fasta) {
+    input_query_fasta = Channel.fromPath(params.fasta)
+} else {
+    input_query_fasta = Channel.fromPath("data/*.fna.gz")
+}
 input_target_fasta = Channel.fromPath('data/target/target.fna.gz')
 
 process SEARCH {
