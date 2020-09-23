@@ -2,42 +2,28 @@
 
 nextflow.enable.dsl=2
 
-input_fasta_channel = Channel.fromPath("data/*.fasta")
+input_query_fasta = Channel.fromPath("data/*.fasta")
+input_target_fasta = Channel.fromPath("data/target.fasta")
 
-process ALIGN {
+process SEARCH {
 
-    container = 'mhoelzer/mmseqs2:12.113e3-0'
+    container = 'mhoelzer/sourmash:3.5.0'
 
     input: 
-    path(fastas)
-    path(db)
+    path(query)
+    path(target)
 
     output:
-    path("${fastas.simpleName}.m8")
+    path("${query.simpleName}")
 
     script:
     """
-    mmseqs easy-search ${fastas} ${db} ${fastas.simpleName}.m8 tmp
+    sourmash compute -k 31 ${query} ${target}
+    sourmash compare -k 31 *.sig -o ${query.simpleName}
     """
 }
 
-process DATABASE {
-
-    container = 'mhoelzer/mmseqs2:12.113e3-0'
-
-    output: 
-    path('uniprot_sprot.tar.gz')
-
-    script:
-    """
-    wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz .
-    #mmseqs createdb uniprot_sprot.fasta.gz targetDB
-    #mmseqs createindex targetDB tmp
-    tar zcvf uniprot_sprot.tar.gz target*
-    """
-}
 
 workflow {
-    DATABASE()
-    ALIGN(input_fasta_channel, DATABASE.out)
+    SEARCH(input_query_fasta, input_target_fasta)
 }
