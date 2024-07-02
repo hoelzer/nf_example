@@ -8,4 +8,4 @@ RUN conda config --add channels conda-forge && \
 	conda config --add channels bioconda && \
 	conda config --add channels default
 
-RUN conda install -y -c bioconda sourmash=3.5.0 && conda clean -a
+RUN conda install -y -c bioconda sourmash=4.8.10 && conda clean -a

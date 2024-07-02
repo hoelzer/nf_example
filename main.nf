@@ -11,11 +11,11 @@ input_target_fasta = Channel.fromPath('data/target/target.fna.gz')
 
 process SEARCH {
 
-    // pull an image from Dockerhub and translate to Singularity
-    //container 'mhoelzer/sourmash:3.5.0'
+    // let nextflowpull an image from Dockerhub 
+    container 'mhoelzer/sourmash:4.8.10'
 
     // or use an available/pre-build local Singularity image
-    container '/scratch/hoelzerm/singularity/rki-sourmash-3.5.0--bd13d14.img'
+    //container '/scratch/hoelzerm/singularity/rki-sourmash-4.8.10--bd13d14.img'
 
     input: 
     tuple path(query), path(target)

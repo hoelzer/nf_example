@@ -1,6 +1,6 @@
 process SEARCH {
 
-    //container 'mhoelzer/sourmash:3.5.0'
+    //container 'mhoelzer/sourmash:4.8.10'
 
     input: 
     path(query)
